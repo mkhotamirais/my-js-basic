@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tebak angak</title>
+  </head>
+  <body>
+    <h1>Game tebak angka</h1>
+    <p>Tebak angka dari 1-10 dengan 5 kesempatan</p>
+    <input type="number" />
+    <p>History: <span class="history"></span></p>
+    <p>jawaban benar: <span class="jbenar"></span></p>
+    <p>jawaban kamu: <span class="jkamu"></span></p>
+    <p>hasil: <span class="hasil"></span></p>
+    <div class="mainlagi"></div>
+
+    <script>
+      const input = document.querySelector("input");
+      const history = document.querySelector(".history");
+      const jbenar = document.querySelector(".jbenar");
+      const jkamu = document.querySelector(".jkamu");
+      const hasil = document.querySelector(".hasil");
+      let jbenarvalue = Math.ceil(Math.random() * 10);
+      // let jbenarvalue = 5;
+      let historyValue = [];
+
+      input.addEventListener("keyup", function (e) {
+        if (e.key == "Enter") {
+          historyValue.push(input.value);
+          history.textContent = historyValue.join(", ");
+          jbenar.textContent = jbenarvalue;
+          jkamu.textContent = input.value;
+          if (jbenar.textContent == jkamu.textContent) {
+            hasil.textContent = `Selamat jawaban kamu benar dengan total percobaan ${historyValue.length} kali`;
+            input.remove();
+            const mainlagi = document.querySelector(".mainlagi");
+            mainlagi.innerHTML = `<a href="">Main Lagi</a>`;
+          } else if (jkamu.textContent < jbenar.textContent) {
+            hasil.textContent = "Angkanya kurang tinggi";
+          } else if (jkamu.textContent > jbenar.textContent) {
+            hasil.textContent = "Angkanya terlalu tinggi";
+          }
+          if (historyValue.length > 3) {
+            hasil.textContent = "kesempatan menjawab habis";
+            input.remove();
+            const mainlagi = document.querySelector(".mainlagi");
+            mainlagi.innerHTML = `<a href="">Main Lagi</a>`;
+          }
+          console.log(historyValue.length > 3);
+          input.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
